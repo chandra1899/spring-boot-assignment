@@ -25,7 +25,7 @@ public class LoginMiddlewareFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 //        System.out.println("in filter");
         String urlPath = httpRequest.getRequestURI();
-        if(urlPath.equals("/login") || urlPath.equals("/register")) {
+        if(urlPath.equals("/login") || urlPath.equals("/register") || urlPath.startsWith("/h2-console")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return ;
         }
