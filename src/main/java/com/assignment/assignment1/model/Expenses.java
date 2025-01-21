@@ -1,6 +1,7 @@
 package com.assignment.assignment1.model;
 
 import jakarta.persistence.*;
+//import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -14,6 +15,7 @@ public class Expenses {
     @Column(nullable = false)
     private double amount;
     @Column(nullable = false)
+//    @NotNull(message = "Amount is required")
     private String category;
 
     public String getCategory() {
