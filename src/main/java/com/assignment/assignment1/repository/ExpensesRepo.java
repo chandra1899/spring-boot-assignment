@@ -11,6 +11,6 @@ import java.util.List;
 public interface ExpensesRepo extends JpaRepository<Expenses, Integer> {
     @Query("SELECT e FROM Expenses e " +
             "JOIN UserExpenses ue ON ue.expenseId = e.id " +
-            "WHERE ue.userId = :userId")
+            "WHERE ue.userid = :userId")
     List<Expenses> findAllExpensesByUserId(int userId);
 }

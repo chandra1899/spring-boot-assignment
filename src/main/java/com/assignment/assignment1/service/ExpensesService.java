@@ -2,6 +2,7 @@ package com.assignment.assignment1.service;
 
 import com.assignment.assignment1.model.Expenses;
 import com.assignment.assignment1.repository.ExpensesRepo;
+import com.assignment.assignment1.repository.UserExpensesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,17 @@ import java.util.List;
 public class ExpensesService {
     @Autowired
     private ExpensesRepo expenseRepo;
+    @Autowired
+    private UserExpensesRepo userExpensesRepo;
+
+    public void deleteExpenseById(int expId) {
+        expenseRepo.deleteById(expId);
+        userExpensesRepo.deleteById(expId);
+    }
+
+    public Expenses getExpenseById(int expId) {
+        return expenseRepo.findById(expId).orElse(null);
+    }
 
     public Expenses createExpense(Expenses expense) {
         return expenseRepo.save(expense);

@@ -14,4 +14,8 @@ public class UserExpensesService {
     public void createUserExpense(UserExpenses userExpenses) {
         userExpensesRepo.save(userExpenses);
     }
+
+    public UserExpenses getById(int expId) {
+        return userExpensesRepo.findById(expId).orElse(null);
+    }
 }

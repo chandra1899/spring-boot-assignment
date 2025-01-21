@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class Home {
         @GetMapping("/")
         public String greet(@RequestAttribute("user") Users user) {
-            return "Welcome Home !" + user.getEmail();
+            return "Welcome Home ! " + user.getName();
         }
 }
