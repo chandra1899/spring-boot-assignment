@@ -4,6 +4,7 @@ import com.assignment.assignment1.model.Users;
 import com.assignment.assignment1.service.CryptoService;
 import com.assignment.assignment1.service.UserService;
 import jakarta.servlet.*;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.hibernate.annotations.Comment;
@@ -36,12 +37,21 @@ public class LoginMiddlewareFilter implements Filter {
             httpResponse.getWriter().write("Unauthorized: Missing or invalid token");
             return ;
         }
-        String token = authHeader.substring(7);
+//        String token = authHeader.substring(7);
+        String token = getTokenFromCookies(httpRequest);
+
+        if (token == null) {
+            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            httpResponse.getWriter().write("Unauthorized: Missing or invalid token");
+            return;
+        }
+
         if(!isTokenValid(token)) {
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             httpResponse.getWriter().write("Unauthorized: Invalid token");
             return ;
         }
+
         String[] credentials = cryptoService.decryptText(token).split(" ");
 //        System.out.println("username : " + credentials[0] + " password : " + credentials[1]);
         Users user = userService.getUserByEmail(credentials[0]);
@@ -65,5 +75,16 @@ public class LoginMiddlewareFilter implements Filter {
         catch (Exception e) {
             return false;
         }
+    }
+
+    private String getTokenFromCookies(HttpServletRequest request) {
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("token".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
     }
 }

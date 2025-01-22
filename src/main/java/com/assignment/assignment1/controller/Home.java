@@ -1,13 +1,12 @@
 package com.assignment.assignment1.controller;
 
 import com.assignment.assignment1.model.Users;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class Home {
+//        @CrossOrigin(origins = "http://localhost:3000")
         @GetMapping("/")
         public String greet(@RequestAttribute("user") Users user) {
             return "Welcome Home ! " + user.getName();
