@@ -13,14 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin
 public class Authentication {
         @Autowired
         private UserService userService;
         @Autowired
         private CryptoService cryptoService;
 
-        @CrossOrigin()
         @PostMapping("/register")
         public ResponseEntity<?> createUser(@RequestBody Users user) {
             boolean userAlreadyExits = userService.checkUserExits(user);

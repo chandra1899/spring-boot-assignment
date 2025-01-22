@@ -4,7 +4,6 @@ import com.assignment.assignment1.model.Users;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
 public class Home {
 //        @CrossOrigin(origins = "http://localhost:3000")
         @GetMapping("/")
