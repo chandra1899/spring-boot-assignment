@@ -31,12 +31,12 @@ public class LoginMiddlewareFilter implements Filter {
             return ;
         }
 
-        String authHeader = httpRequest.getHeader("Authorization");
-        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            httpResponse.getWriter().write("Unauthorized: Missing or invalid token");
-            return ;
-        }
+//        String authHeader = httpRequest.getHeader("Authorization");
+//        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
+//            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            httpResponse.getWriter().write("Unauthorized: Missing or invalid token");
+//            return ;
+//        }
 //        String token = authHeader.substring(7);
         String token = getTokenFromCookies(httpRequest);
 
@@ -78,13 +78,16 @@ public class LoginMiddlewareFilter implements Filter {
     }
 
     private String getTokenFromCookies(HttpServletRequest request) {
+        System.out.println(request.getCookies().length);
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
                 if ("token".equals(cookie.getName())) {
+                    System.out.println(cookie.getValue());
                     return cookie.getValue();
                 }
             }
         }
+        System.out.println("no cookie found");
         return null;
     }
 }

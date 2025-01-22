@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class Authentication {
         @Autowired
         private UserService userService;
