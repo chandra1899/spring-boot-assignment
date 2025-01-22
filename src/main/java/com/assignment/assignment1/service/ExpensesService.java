@@ -31,4 +31,12 @@ public class ExpensesService {
     public List<Expenses> getAllExpenses(int id) {
         return expenseRepo.findAllExpensesByUserId(id);
     }
+
+    public void updateExpense(Expenses expense) {
+        expenseRepo.save(expense);
+    }
+
+    public List<Expenses> getExpensesByCategory(String s) {
+        return expenseRepo.findAllByCategory(s);
+    }
 }

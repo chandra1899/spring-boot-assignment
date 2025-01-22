@@ -13,4 +13,5 @@ public interface ExpensesRepo extends JpaRepository<Expenses, Integer> {
             "JOIN UserExpenses ue ON ue.expenseId = e.id " +
             "WHERE ue.userid = :userId")
     List<Expenses> findAllExpensesByUserId(int userId);
+    List<Expenses> findAllByCategory(String category);
 }
