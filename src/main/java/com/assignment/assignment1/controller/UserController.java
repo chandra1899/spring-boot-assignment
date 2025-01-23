@@ -18,7 +18,10 @@ public class UserController {
     private ExpensesService expensesService;
 
     @GetMapping("/expenses")
-    public ResponseEntity<List<Expenses>> getAllExpenses(@RequestAttribute("user") Users user) {
+    public ResponseEntity<List<Expenses>> getAllExpenses(@RequestAttribute(name = "user", required = false) Users user) {
+//        System.out.println("user is "+ user);
+        if(user == null)
+            return new ResponseEntity<>(List.of(), HttpStatus.UNAUTHORIZED);
         return new ResponseEntity<>(expensesService.getAllExpenses(user.getId()), HttpStatus.OK);
     }
 }

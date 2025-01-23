@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,6 +22,8 @@ public class Authentication {
 
         @PostMapping("/register")
         public ResponseEntity<?> createUser(@RequestBody Users user) {
+            if(user == null)
+                return new ResponseEntity<>(List.of(), HttpStatus.UNAUTHORIZED);
             boolean userAlreadyExits = userService.checkUserExits(user);
             if(userAlreadyExits)
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exits");

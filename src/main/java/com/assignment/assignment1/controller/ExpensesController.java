@@ -23,6 +23,8 @@ public class ExpensesController {
 
     @PostMapping("/expense")
     public ResponseEntity<?> createExpense(@RequestBody Expenses expense, @RequestAttribute("user") Users user) {
+        if(user == null)
+            return new ResponseEntity<>(List.of(), HttpStatus.UNAUTHORIZED);
         if(expense.getTitle().isEmpty() || expense.getCategory().isEmpty() || expense.getAmount() == 0)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Info is missing");
         Expenses exp = expensesService.createExpense(expense);
@@ -35,6 +37,8 @@ public class ExpensesController {
 
     @DeleteMapping("/expense/{expId}")
     public ResponseEntity<?> deleteExpense(@PathVariable int expId, @RequestAttribute("user") Users user) {
+        if(user == null)
+            return new ResponseEntity<>(List.of(), HttpStatus.UNAUTHORIZED);
         Expenses expense = expensesService.getExpenseById(expId);
         if(expense == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Expense Doesn't Exits");
