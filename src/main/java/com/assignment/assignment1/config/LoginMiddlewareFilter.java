@@ -41,6 +41,7 @@ public class LoginMiddlewareFilter implements Filter {
         }
 
         String[] credentials = cryptoService.decryptText(token).split(" ");
+//        token = encrypt(useremail + " " + password)
         Users user = userService.getUserByEmail(credentials[0]);
         httpRequest.setAttribute("user", user);
         filterChain.doFilter(servletRequest, servletResponse);
