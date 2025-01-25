@@ -60,18 +60,11 @@ public class ExpensesController {
         return new ResponseEntity<>("Expense updated successfully !", HttpStatus.OK);
     }
 
-    @GetMapping("expense")
-    public ResponseEntity<?> findByIdOrCategory(@RequestParam Optional<Integer> id, Optional<String> category) {
-        List<Expenses> searchedExpenses = new ArrayList<>();
-        if(id.isPresent()) {
-            searchedExpenses.add(expensesService.getExpenseById(id.get()));
-        } else if(category.isPresent()) {
-            searchedExpenses.addAll(expensesService.getExpensesByCategory(category.get()));
-        } else {
-            return ResponseEntity.badRequest().body("Provide id or category to search");
-        }
-        if(searchedExpenses.isEmpty())
-            return new ResponseEntity<>("No expenses present", HttpStatus.OK);
-        return new ResponseEntity<>(searchedExpenses, HttpStatus.OK);
+    @GetMapping("/expense/search")
+    public ResponseEntity<?> findByIdOrCategory(@RequestParam String keyword, @RequestAttribute("user") Users user) {
+        if(keyword.isEmpty())
+            return new ResponseEntity<>(List.of(), HttpStatus.OK);
+        List<Expenses> expenses = expensesService.findExpenses(keyword, user.getId());
+        return new ResponseEntity<>(expenses, HttpStatus.OK);
     }
 }

@@ -14,4 +14,10 @@ public interface ExpensesRepo extends JpaRepository<Expenses, Integer> {
             "WHERE ue.userid = :userId")
     List<Expenses> findAllExpensesByUserId(int userId);
     List<Expenses> findAllByCategory(String category);
+    @Query("SELECT e FROM Expenses e "+
+            "JOIN UserExpenses ue ON ue.expenseId = e.id " +
+            "WHERE ue.userid = :userId"+
+            "  AND (LOWER(e.title) LIKE LOWER(CONCAT('%', :keyword, '%'))" +
+            "  OR LOWER(e.category) LIKE LOWER(CONCAT('%', :keyword, '%')))")
+    List<Expenses> findExpenses(String keyword, int userId);
 }

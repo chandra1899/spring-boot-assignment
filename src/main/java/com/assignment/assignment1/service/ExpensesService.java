@@ -39,4 +39,8 @@ public class ExpensesService {
     public List<Expenses> getExpensesByCategory(String s) {
         return expenseRepo.findAllByCategory(s);
     }
+
+    public List<Expenses> findExpenses(String keyword, int userId) {
+        return expenseRepo.findExpenses(keyword, userId);
+    }
 }
